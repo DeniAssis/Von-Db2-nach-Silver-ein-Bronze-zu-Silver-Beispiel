@@ -59,6 +59,29 @@ The cells in each script are separated by `# %%` lines. Paste each block into it
 - `silver_vertrag`: 5 valid contracts (contract `V0000001` with amount 45.90, the newer load)
 - `silver_fehler`: 4 invalid records (negative amount, empty contract number, end date before start date, non-numeric amount)
 
+- ## Ergebnisse
+
+Die Bronze-Schicht enthält 10 Zeilen. Davon sind 5 gültig und 4 fehlerhaft.
+
+### Fehlerhafte Zeilen (aussortiert)
+
+| vertrag_nr | kunden_nr | produkt_cd | beitrag | vers_beginn | vers_ende  | Problem                     |
+|------------|-----------|------------|---------|-------------|------------|-----------------------------|
+| *(leer)*   | K005      | KFZ        | 50      | 2023-06-01  |            | Vertragsnummer fehlt        |
+| V0000005   | K004      | KFZ        | -30     | 2023-04-01  |            | Negativer Beitrag           |
+| V0000006   | K006      | HAUS       | 22      | 2024-01-01  | 2023-01-01 | Ende liegt vor Beginn       |
+| V0000008   | K008      | KFZ        | *(leer)*| 2024-02-01  |            | Beitrag fehlt               |
+
+### Silver-Tabelle `silver_vertrag` (bereinigt)
+
+| vertrag_nr | kunden_nr | produkt_cd | beitrag | vers_beginn | vers_ende  |
+|------------|-----------|------------|---------|-------------|------------|
+| V0000001   | K001      | KFZ        | 45.9    | 2020-01-01  |            |
+| V0000002   | K002      | HAUS       | 12.5    | 2019-05-15  |            |
+| V0000003   | K003      | LEBEN      | 120     | 2015-03-01  | 2025-03-01 |
+| V0000004   | K001      | HAUS       | 18      | 2021-07-01  |            |
+| V0000007   | K007      | LEBEN      | 80      | 2022-02-01  |            |
+
 ## Limitations
 
 - The pandas version was run and checked in DataCamp DataLab. The **Fabric (PySpark) version has not been run in a Fabric environment** and may need small adjustments, for example to table or schema names.
