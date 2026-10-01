@@ -1,0 +1,1 @@
+# Von-Db2-nach-Silver-ein-Bronze-zu-Silver-Beispiel
